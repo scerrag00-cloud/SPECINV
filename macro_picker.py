@@ -9,13 +9,12 @@ news_api_key = os.environ.get("NEWS_API_KEY")
 fred_api_key = os.environ.get("FRED_API_KEY")
 telegram_token = os.environ.get("TELEGRAM_TOKEN")
 telegram_chat_id = os.environ.get("TELEGRAM_CHAT_ID")
-# NUOVA CHIAVE NECESSARIA PER INTERROGARE GEMINI:
 gemini_api_key = os.environ.get("GEMINI_API_KEY") 
 
 # --- CONFIGURAZIONE GEMINI ---
 genai.configure(api_key=gemini_api_key)
-# Usiamo il modello pro per analisi complesse
-model = genai.GenerativeModel('gemini-3.1-Flash-Lite')
+# Sintassi corretta in minuscolo
+model = genai.GenerativeModel('gemini-3.1-flash-lite')
 
 def scarica_top_news(chiave_api):
     query = "(\"interest rates\" OR \"inflation\" OR \"global economy\" OR \"tech sector\" OR \"geopolitics\")"
@@ -54,14 +53,14 @@ testo_notizie = scarica_top_news(news_api_key)
 print("Raccolta dati macro...")
 if fred_api_key:
     tasso_disoccupazione = preleva_fred('UNRATE', fred_api_key)
-    inflazione = preleva_fred('CPIAUCSL', fred_api_key) # Nota: Il CPI è un indice, non una %. Serve per trend, lo passiamo così.
+    inflazione = preleva_fred('CPIAUCSL', fred_api_key)
 else:
     tasso_disoccupazione = "Non disponibile"
     inflazione = "Non disponibile"
 
 # 2. COSTRUZIONE DEL PROMPT DINAMICO
 prompt_ottimizzato = f"""
-Agisci come un analista azionario quantitativo e un gestore di portafoglio macro-driven. Il tuo compito è analizzare una serie di eventi macroeconomici globali di OGGI e dedurre quali specifiche aziende quotate in borsa potrebbero subirne un impatto diretto sui prezzi nel breve/medio termine.
+Agisci come un analista azionario quantitativo e un gestore di portafoglio macro-driven. Il tuo compito è analizzare una serie di eventi macroeconomici globali di OGGI e dedurre quali specifiche aziende quotate nell'indice S&P 500 potrebbero subirne un impatto diretto sui prezzi nel breve/medio termine.
 
 A seguito dell'analisi di questi dati, non limitarti a fornirmi previsioni su interi settori. Voglio che tu estragga i nomi di **massimo 3 specifiche aziende** che subiranno le conseguenze (positive o negative) maggiori di questi eventi.
 

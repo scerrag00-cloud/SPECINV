@@ -15,7 +15,7 @@ gemini_api_key = os.environ.get("GEMINI_API_KEY")
 # --- CONFIGURAZIONE GEMINI ---
 genai.configure(api_key=gemini_api_key)
 # Usiamo il modello pro per analisi complesse
-model = genai.GenerativeModel('gemini-1.5-pro-latest')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 def scarica_top_news(chiave_api):
     query = "(\"interest rates\" OR \"inflation\" OR \"global economy\" OR \"tech sector\" OR \"geopolitics\")"
